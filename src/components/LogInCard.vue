@@ -25,7 +25,7 @@
     </mdb-card>
     <div class="footer text-center">
       <p>
-        © 2015 Acme, Inc.
+        © 2021 Acme, Inc.
         <a href="#">Terms</a>
         <a href="#">Privacy</a>
       </p>
@@ -52,6 +52,7 @@ export default {
     };
   },
   methods: {
+    //todo szinezés meg a többi .then-ből
     checkForm(event) {
       event.preventDefault();
       event.target.classList.add("was-validated");

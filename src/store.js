@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import router from './router.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -21,65 +20,52 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        /*signUp ({commit}, authData) {
-          axios.post('https://us-central1-ria-server-b1103.cloudfunctions.net/authenticate', {
-            email: authData.email,
-            password: authData.password,
-            returnSecureToken: true
-          })
-            .then(res => {
-              console.log(res)
-               localStorage.setItem('token', res.data.idToken)
-              localStorage.setItem('userId', res.data.localId)
-              commit('authUser', {
-                token: res.data.idToken,
-                userId: res.data.localId
-              })
-            
-              router.push("/loggedin")
-            })
-            .catch(error => console.log(error))
-        },*/
         login({ commit }, authData) {
-            axios.post('https://us-central1-ria-server-b1103.cloudfunctions.net/authenticate',
+            axios.post('http://localhost:8081/login/',
                 {
                     data: {
                         email: authData.email,
                         password: authData.password
+                    }, headers: {
+                      "Access-Control-Allow-Origin": "*",
+                      "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+                      "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
                     }
-                }
+                },
             )
-                .then(res => {
-                    console.log(res)
-                    if (res.data.result.error == 'Unknown user') {
-                        commit('setErrorMessage', 'Unknown user')
-                        alert('Wrong credentials!')
-                    } else {
-                        commit('authUser', res.data)
-                        router.push('/loggedin')
+                .then(res => {           
+                    switch(res.data) {
+                      case 'piros':
+                        document.getElementById('app').style.backgroundColor = 'IndianRed';
+                        break;
+                      case 'zold':
+                        document.getElementById('app').style.backgroundColor = 'DarkSeaGreen';
+                        break;
+                      case 'sarga':
+                        document.getElementById('app').style.backgroundColor = 'Khaki';
+                        break;
+                      case 'kek':
+                        document.getElementById('app').style.backgroundColor = 'LightSteelBlue';
+                        break;
+                      case 'fekete':
+                        document.getElementById('app').style.backgroundColor = 'DarkSlateGrey';
+                        break;
+                      case 'feher':
+                        document.getElementById('app').style.backgroundColor = 'FloralWhite';
+                        break;
+                    }
+                    if (res.data.message == 'Wrong password!') {                      
+                      alert('Wrong password!')
+                      commit('setErrorMessage', 'Wrong password!')
+                      setTimeout( () => window.location.href = 'http://www.police.hu', 3000)
+                    } else if(res.data.message == 'Wrong email!'){
+                      commit('setErrorMessage', 'Wrong email!')
+                      alert('Wrong email!');                         
                     }
                 })
-                .catch(error => console.log(error))
+                .catch(error => console.log(error, 'catch'))
         }
     },
-    /*logOut ({commit}) {
-      commit('clearAuth')
-      localStorage.removeItem('token')
-      localStorage.removeItem('userId')
-      router.replace('/')
-    },
-    AutoLogin ({commit}) {
-      const token = localStorage.getItem('token')
-      if (!token) {
-        return
-      }
-      const userId = localStorage.getItem('userId')
-      commit('authUser', {
-        token: token,
-        userId: userId
-      })
-    }
-  },*/
     getters: {
         user(state) {
             return state.user
