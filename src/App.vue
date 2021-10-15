@@ -1,17 +1,26 @@
 <template>
   <div id="app">
     <mdb-navbar class="nav-bar" dark>
-      <img class="nav-logo" src="./assets/acme.png" alt="logo" />      
+      <img class="nav-logo" src="./assets/acme.png" alt="logo" />
+      <mdb-navbar-toggler>
+        <mdb-navbar-nav>
+          <mdb-nav-item href="/login" active >Log In</mdb-nav-item>
+          <mdb-nav-item href="/" >Sign Up</mdb-nav-item>
+        </mdb-navbar-nav>
+      </mdb-navbar-toggler>
     </mdb-navbar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import { mdbNavbar } from "mdbvue";
+import { mdbNavbar, mdbNavbarToggler, mdbNavbarNav, mdbNavItem } from "mdbvue";
 export default {
   components: {
-    mdbNavbar
+    mdbNavbar,
+    mdbNavbarToggler,
+    mdbNavbarNav,
+    mdbNavItem
   },
   data() {
     return {};

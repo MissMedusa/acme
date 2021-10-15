@@ -1,24 +1,18 @@
 <template>
-  <mdb-col class="log-in-container text-md-left d-flex">
+  <mdb-col class="sign-up-container text-md-left d-flex">
     <mdb-card id="classic-card">
       <mdb-card-body class="z-depth-2">
         <form class="needs-validation" novalidate @submit.prevent="checkForm">
-          <h1 class="text-md-left">Welcome back to Acme.</h1>
-          <h6 class="text-md-left">Log in by entering your credentials beow.</h6>
-          <mdb-input id="validateEmail" label="Email" type="email" required v-model="email" />
-          <mdb-input
-            id="validatePassword"
-            label="Password"
-            type="password"
-            v-model="password"
-            required
-          />
+          <h1 class="text-md-left">Welcome to Acme.</h1>
+          <h6 class="text-md-left">Create your account by filling the form below.</h6>
+          <mdb-input id="validateEmail" required label="Email" type="email" />
+          <mdb-input id="validatePassword" required label="Password" type="password" />
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="defaultUnchecked" />
             <label class="custom-control-label" for="defaultUnchecked">Remember me.</label>
           </div>
-          <div class="text-md-right mt-4 black-text">
-            <mdb-btn color="blue" type="submit">Log In</mdb-btn>
+          <div class="text-right mt-4 black-text">
+            <mdb-btn color="blue" type="submit">Sign Up</mdb-btn>
           </div>
         </form>
       </mdb-card-body>
@@ -37,7 +31,7 @@
 import { mdbCol, mdbBtn, mdbCard, mdbCardBody, mdbInput } from "mdbvue";
 
 export default {
-  name: "LogInCard",
+  name: "SignUpCard",
   components: {
     mdbCol,
     mdbBtn,
@@ -46,27 +40,13 @@ export default {
     mdbInput
   },
   data() {
-    return {
-      email: "",
-      password: ""
-    };
+    return {};
   },
   methods: {
     checkForm(event) {
       event.preventDefault();
       event.target.classList.add("was-validated");
-
-      if (this.email && this.password) {
-        const formData = {
-          email: this.email,
-          password: this.password
-        };
-        console.log(formData);
-        this.$store.dispatch("login", {
-          email: formData.email,
-          password: formData.password
-        });
-      }
+      alert("You can't sign up yet. Sorry!");
     }
   }
 };
@@ -97,7 +77,7 @@ a {
 
 .footer a,
 p {
-  margin: 1vw;
+  margin: 0.5vw;
   text-decoration: none;
   color: #a1a1a1;
 }
@@ -130,7 +110,7 @@ h6 {
   font-size: 15px;
 }
 
-.log-in-container {
+.sign-up-container {
   flex-direction: column;
 }
 
